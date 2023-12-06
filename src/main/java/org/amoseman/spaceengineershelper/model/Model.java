@@ -1,4 +1,4 @@
-package org.amoseman.spaceengineershelper;
+package org.amoseman.spaceengineershelper.model;
 
 import org.amoseman.spaceengineershelper.io.StateLoader;
 import org.amoseman.spaceengineershelper.state.State;

@@ -1,5 +1,6 @@
 package org.amoseman.spaceengineershelper;
 
+import org.amoseman.spaceengineershelper.model.Model;
 import org.amoseman.spaceengineershelper.ui.View;
 
 public class Main {

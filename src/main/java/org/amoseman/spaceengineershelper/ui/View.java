@@ -1,7 +1,7 @@
 package org.amoseman.spaceengineershelper.ui;
 
-import org.amoseman.spaceengineershelper.AggregatedCost;
-import org.amoseman.spaceengineershelper.Model;
+import org.amoseman.spaceengineershelper.model.AggregatedCost;
+import org.amoseman.spaceengineershelper.model.Model;
 import org.amoseman.spaceengineershelper.resource.Resource;
 
 import javax.swing.*;
