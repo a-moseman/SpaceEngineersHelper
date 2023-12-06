@@ -32,7 +32,7 @@ public class View extends JFrame {
         constraints.fill = GridBagConstraints.HORIZONTAL;
         addComponent(new JLabel("Resource"), constraints, 0, 0);
         addComponent(new JLabel("Amount"), constraints, 1, 0);
-        addComponent(new TextField(), constraints, 0, 1);
+        addComponent(nameField, constraints, 0, 1);
         addComponent(amountField, constraints, 1, 1);
         addComponent(button, constraints, 2, 1);
         addComponent(output, constraints, 0, 2, 3);
