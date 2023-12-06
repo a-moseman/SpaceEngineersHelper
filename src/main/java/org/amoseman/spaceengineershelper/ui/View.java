@@ -8,11 +8,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class View extends JFrame {
-    private Model model;
-    private TextField nameField;
-    private TextField amountField;
-    private TextArea output;
-    private JButton button;
+    private final Model model;
+    private final TextField nameField;
+    private final TextField amountField;
+    private final TextArea output;
+    private final JButton button;
     private int lastOutputLength = 0;
 
     public View(Model model) {
@@ -20,11 +20,7 @@ public class View extends JFrame {
         setSize(640, 640);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new GridBagLayout());
-        initComponents();
-        setVisible(true);
-    }
 
-    private void initComponents() {
         GridBagConstraints constraints = new GridBagConstraints();
 
         constraints.ipadx = 128;
@@ -59,6 +55,8 @@ public class View extends JFrame {
         output = new TextArea();
         output.setEditable(false);
         add(output, constraints);
+
+        setVisible(true);
     }
 
     private void calculate() {
