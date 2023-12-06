@@ -2,7 +2,9 @@ package org.amoseman.spaceengineershelper;
 
 import org.amoseman.spaceengineershelper.resource.Resource;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 public class AggregatedCost {
@@ -16,12 +18,11 @@ public class AggregatedCost {
 
     public void add(int multiplier, Resource resource) {
         String key = resource.getName();
+        int amount = resource.getAmount() * multiplier;
         if (cost.containsKey(key)) {
-            cost.put(key, cost.get(key) + resource.getAmount() * multiplier);
+            amount += cost.get(key);
         }
-        else {
-            cost.put(key, resource.getAmount() * multiplier);
-        }
+        cost.put(key, amount);
     }
 
     @Override
