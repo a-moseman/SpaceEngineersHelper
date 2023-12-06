@@ -12,7 +12,6 @@ public class View extends JFrame {
     private final TextField nameField;
     private final TextField amountField;
     private final TextArea output;
-    private final JButton button;
     private int lastOutputLength = 0;
 
     public View(Model model) {
@@ -29,7 +28,6 @@ public class View extends JFrame {
         add(new JLabel("Resource"), constraints);
 
         constraints.gridx = 1;
-        constraints.gridy = 1;
         add(new JLabel("Amount"), constraints);
 
         constraints.gridx = 0;
@@ -39,13 +37,11 @@ public class View extends JFrame {
         add(nameField, constraints);
 
         constraints.gridx = 1;
-        constraints.gridy = 2;
         amountField = new TextField();
         add(amountField, constraints);
 
         constraints.gridx = 2;
-        constraints.gridy = 2;
-        button = new JButton("Calculate");
+        JButton button = new JButton("Calculate");
         button.addActionListener(e -> calculate());
         add(button, constraints);
 
@@ -71,6 +67,10 @@ public class View extends JFrame {
         }
         catch (NumberFormatException e) {
             error("amount is not a number");
+            return;
+        }
+        if (amount < 1) {
+            error("amount must be greater than 0");
             return;
         }
         Resource resource = new Resource(nameField.getText(), amount);
