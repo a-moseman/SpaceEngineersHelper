@@ -10,44 +10,36 @@ import java.util.List;
 public class Parser {
     public static State parse(List<String> lines) {
         StateFactory factory = new StateFactory();
-        parseCosts(parseNames(0, lines, factory), lines, factory);
+        int index = 0;
+        Resource resource = null;
+        List<Resource> in = new ArrayList<>();
+        while (index < lines.size()) {
+            String line = lines.get(index);
+            index++;
+            if (line.startsWith("//")) {
+                continue;
+            }
+            Resource temp = parseResource(line);
+            if (line.startsWith("\t")) {
+                in.add(temp);
+            }
+            else {
+                factory.addName(temp.getName());
+                if (!in.isEmpty()) {
+                    factory.addCost(new Cost(resource, in));
+                    in = new ArrayList<>();
+                }
+                resource = temp;
+            }
+        }
+        if (!in.isEmpty()) {
+            factory.addCost(new Cost(resource, in));
+        }
         return factory.build();
     }
 
-    private static int parseNames(int index, List<String> lines, StateFactory factory) {
-        while (index < lines.size()) {
-            String line = lines.get(index);
-            index++;
-            if (line.isEmpty()) {
-                break;
-            }
-            if (line.startsWith("//")) {
-                continue;
-            }
-            factory.addName(line);
-        }
-        return index;
-    }
-
-    private static void parseCosts(int index, List<String> lines, StateFactory factory) {
-        while (index < lines.size()) {
-            String line = lines.get(index);
-            index++;
-            if (line.startsWith("//")) {
-                continue;
-            }
-            Resource out = parseResource(line);
-            List<Resource> in = new ArrayList<>();
-            while (index < lines.size() && (line = lines.get(index)).startsWith("\t")) {
-                line = line.replaceAll("\t", "");
-                in.add(parseResource(line));
-                index++;
-            }
-            factory.addCost(new Cost(out, in));
-        }
-    }
-
     private static Resource parseResource(String line) {
+        line = line.replaceAll("\t", "");
         String[] parts = line.split(": ");
         if (parts.length == 1) {
             return new Resource(parts[0], 1);
