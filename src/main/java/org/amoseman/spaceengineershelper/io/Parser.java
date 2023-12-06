@@ -1,2 +1,48 @@
-package org.amoseman.spaceengineershelper.io;public class Parser {
+package org.amoseman.spaceengineershelper.io;
+import org.amoseman.spaceengineershelper.resource.Cost;
+import org.amoseman.spaceengineershelper.resource.Resource;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Parser {
+    public static State parse(List<String> lines) {
+        StateFactory factory = new StateFactory();
+        parseCosts(parseNames(0, lines, factory), lines, factory);
+        return factory.build();
+    }
+
+    private static int parseNames(int index, List<String> lines, StateFactory factory) {
+        while (index < lines.size()) {
+            String line = lines.get(index);
+            index++;
+            if (line.isEmpty()) {
+                break;
+            }
+            factory.addName(line);
+        }
+        return index;
+    }
+
+    private static void parseCosts(int index, List<String> lines, StateFactory factory) {
+        while (index < lines.size()) {
+            String line = lines.get(index);
+            Resource out = parseResource(line);
+            List<Resource> in = new ArrayList<>();
+            index++;
+            while (index < lines.size() && (line = lines.get(index)).startsWith("\t")) {
+                line = line.replaceAll("\t", "");
+                in.add(parseResource(line));
+                index++;
+            }
+            factory.addCost(new Cost(out, in));
+        }
+    }
+
+    private static Resource parseResource(String line) {
+        String[] parts = line.split(": ");
+        String name = parts[0];
+        int amount = Integer.parseInt(parts[1]);
+        return new Resource(name, amount);
+    }
 }
