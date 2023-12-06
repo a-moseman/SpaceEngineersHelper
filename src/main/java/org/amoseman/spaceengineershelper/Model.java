@@ -40,4 +40,13 @@ public class Model {
             getAggregatedCostHelper(m, child, aggregatedCost);
         }
     }
+
+    public boolean isResource(String name) {
+        for (String resource : state.getResourceNames()) {
+            if (name.equals(resource)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

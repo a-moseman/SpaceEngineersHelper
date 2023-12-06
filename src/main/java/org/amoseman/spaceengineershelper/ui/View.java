@@ -2,7 +2,6 @@ package org.amoseman.spaceengineershelper.ui;
 
 import org.amoseman.spaceengineershelper.AggregatedCost;
 import org.amoseman.spaceengineershelper.Model;
-import org.amoseman.spaceengineershelper.io.Reader;
 import org.amoseman.spaceengineershelper.resource.Resource;
 
 import javax.swing.*;
@@ -14,32 +13,82 @@ public class View extends JFrame {
     private TextField amountField;
     private TextArea output;
     private JButton button;
+    private int lastOutputLength = 0;
 
     public View(Model model) {
         this.model = model;
         setSize(640, 640);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLayout(new GridLayout());
+        setLayout(new GridBagLayout());
+        initComponents();
+        setVisible(true);
+    }
+
+    private void initComponents() {
+        GridBagConstraints constraints = new GridBagConstraints();
+
+        constraints.ipadx = 128;
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        add(new JLabel("Resource"), constraints);
+
+        constraints.gridx = 1;
+        constraints.gridy = 1;
+        add(new JLabel("Amount"), constraints);
+
+        constraints.gridx = 0;
+        constraints.gridy = 2;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
         nameField = new TextField();
-        add(nameField);
+        add(nameField, constraints);
+
+        constraints.gridx = 1;
+        constraints.gridy = 2;
         amountField = new TextField();
-        add(amountField);
+        add(amountField, constraints);
+
+        constraints.gridx = 2;
+        constraints.gridy = 2;
         button = new JButton("Calculate");
-        button.addActionListener(e -> {
-            String name = nameField.getText();
-            int amount = Integer.parseInt(amountField.getText());
-            Resource resource = new Resource(name, amount);
-            AggregatedCost aggregatedCost = model.getAggregatedCost(resource);
-            output.insert(aggregatedCost.toString(), 0);
-            nameField.setText("");
-            amountField.setText("");
-        });
-        add(button);
+        button.addActionListener(e -> calculate());
+        add(button, constraints);
+
+        constraints.gridx = 0;
+        constraints.gridy = 3;
+        constraints.gridwidth = 3;
         output = new TextArea();
         output.setEditable(false);
-        output.setColumns(128);
-        output.setRows(32);
-        add(output);
-        setVisible(true);
+        add(output, constraints);
+    }
+
+    private void calculate() {
+        String name = nameField.getText();
+        if (!model.isResource(name)) {
+            error("invalid resource name");
+            return;
+        }
+        int amount;
+        try {
+            amount = Integer.parseInt(amountField.getText());
+        }
+        catch (NumberFormatException e) {
+            error("amount is not a number");
+            return;
+        }
+        Resource resource = new Resource(nameField.getText(), amount);
+        AggregatedCost aggregatedCost = model.getAggregatedCost(resource);
+        write(aggregatedCost.toString());
+    }
+
+    private void write(String text) {
+        output.replaceRange("", 0, lastOutputLength);
+        output.insert(text, 0);
+        lastOutputLength = text.length();
+        nameField.setText("");
+        amountField.setText("");
+    }
+
+    private void error(String text) {
+        write(String.format("ERROR: %s", text));
     }
 }
