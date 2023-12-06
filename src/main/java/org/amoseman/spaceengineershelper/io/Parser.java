@@ -41,8 +41,12 @@ public class Parser {
 
     private static Resource parseResource(String line) {
         String[] parts = line.split(": ");
-        String name = parts[0];
-        int amount = Integer.parseInt(parts[1]);
-        return new Resource(name, amount);
+        if (parts.length == 1) {
+            return new Resource(parts[0], 1);
+        }
+        else {
+            int amount = Integer.parseInt(parts[1]);
+            return new Resource(parts[0], amount);
+        }
     }
 }
