@@ -1,4 +1,5 @@
 plugins {
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
     id 'java'
 }
 
@@ -7,6 +8,14 @@ version = '1.0'
 
 repositories {
     mavenCentral()
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'org.amoseman.spaceengineershelper.Main'
+        )
+    }
 }
 
 dependencies {
