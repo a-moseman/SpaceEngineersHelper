@@ -20,12 +20,12 @@ public class Model {
         return aggregatedCost;
     }
 
-    private void getAggregatedCostHelper(int multiplier, Resource resource, AggregatedCost aggregatedCost) {
+    private void getAggregatedCostHelper(long multiplier, Resource resource, AggregatedCost aggregatedCost) {
         if (!state.hasCost(resource.getName())) {
             aggregatedCost.add(multiplier, resource);
             return;
         }
-        int m = multiplier * resource.getAmount();
+        long m = multiplier * resource.getAmount();
         Cost cost = state.getCost(resource.getName());
         List<Resource> in = cost.getIn();
         for (Resource child : in) {

@@ -47,7 +47,7 @@ public class Parser {
             return new Resource(parts[0], 1);
         }
         else {
-            int amount = Integer.parseInt(parts[1]);
+            long amount = Long.parseLong(parts[1]);
             return new Resource(parts[0], amount);
         }
     }

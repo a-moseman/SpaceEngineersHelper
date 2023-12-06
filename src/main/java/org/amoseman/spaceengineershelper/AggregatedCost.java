@@ -2,23 +2,21 @@ package org.amoseman.spaceengineershelper;
 
 import org.amoseman.spaceengineershelper.resource.Resource;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Set;
 
 public class AggregatedCost {
     private final Resource resource;
-    private final HashMap<String, Integer> cost;
+    private final HashMap<String, Long> cost;
 
     public AggregatedCost(Resource resource) {
         this.resource = resource;
         this.cost = new HashMap<>();
     }
 
-    public void add(int multiplier, Resource resource) {
+    public void add(long multiplier, Resource resource) {
         String key = resource.getName();
-        int amount = resource.getAmount() * multiplier;
+        long amount = resource.getAmount() * multiplier;
         if (cost.containsKey(key)) {
             amount += cost.get(key);
         }
