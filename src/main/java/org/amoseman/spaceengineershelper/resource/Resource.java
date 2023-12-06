@@ -2,9 +2,9 @@ package org.amoseman.spaceengineershelper.resource;
 
 public class Resource {
     private final String name;
-    private final long amount;
+    private final double amount;
 
-    public Resource(String name, long amount) {
+    public Resource(String name, double amount) {
         this.name = name;
         this.amount = amount;
     }
@@ -13,12 +13,12 @@ public class Resource {
         return name;
     }
 
-    public long getAmount() {
+    public double getAmount() {
         return amount;
     }
 
     @Override
     public String toString() {
-        return String.format("%s: %d", name, amount);
+        return String.format("%s: %f", name, amount);
     }
 }

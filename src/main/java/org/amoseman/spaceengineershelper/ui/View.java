@@ -59,9 +59,9 @@ public class View extends JFrame {
             error("invalid resource name");
             return;
         }
-        long amount;
+        double amount;
         try {
-            amount = Long.parseLong(amountField.getText());
+            amount = Double.parseDouble(amountField.getText());
         }
         catch (NumberFormatException e) {
             error("amount is not a number");

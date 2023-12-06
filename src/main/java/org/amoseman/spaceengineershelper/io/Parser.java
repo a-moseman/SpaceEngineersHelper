@@ -53,7 +53,7 @@ public class Parser {
             return new Resource(parts[0], 1);
         }
         else {
-            long amount = Long.parseLong(parts[1]);
+            double amount = Double.parseDouble(parts[1]);
             return new Resource(parts[0], amount);
         }
     }
