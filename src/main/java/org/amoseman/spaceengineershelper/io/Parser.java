@@ -21,6 +21,9 @@ public class Parser {
             if (line.isEmpty()) {
                 break;
             }
+            if (line.startsWith("//")) {
+                continue;
+            }
             factory.addName(line);
         }
         return index;
@@ -29,9 +32,12 @@ public class Parser {
     private static void parseCosts(int index, List<String> lines, StateFactory factory) {
         while (index < lines.size()) {
             String line = lines.get(index);
+            index++;
+            if (line.startsWith("//")) {
+                continue;
+            }
             Resource out = parseResource(line);
             List<Resource> in = new ArrayList<>();
-            index++;
             while (index < lines.size() && (line = lines.get(index)).startsWith("\t")) {
                 line = line.replaceAll("\t", "");
                 in.add(parseResource(line));
