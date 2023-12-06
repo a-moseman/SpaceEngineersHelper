@@ -20,39 +20,37 @@ public class View extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new GridBagLayout());
 
-        GridBagConstraints constraints = new GridBagConstraints();
-
-        constraints.ipadx = 128;
-        constraints.gridx = 0;
-        constraints.gridy = 1;
-        add(new JLabel("Resource"), constraints);
-
-        constraints.gridx = 1;
-        add(new JLabel("Amount"), constraints);
-
-        constraints.gridx = 0;
-        constraints.gridy = 2;
-        constraints.fill = GridBagConstraints.HORIZONTAL;
         nameField = new TextField();
-        add(nameField, constraints);
-
-        constraints.gridx = 1;
         amountField = new TextField();
-        add(amountField, constraints);
-
-        constraints.gridx = 2;
         JButton button = new JButton("Calculate");
         button.addActionListener(e -> calculate());
-        add(button, constraints);
-
-        constraints.gridx = 0;
-        constraints.gridy = 3;
-        constraints.gridwidth = 3;
         output = new TextArea();
         output.setEditable(false);
-        add(output, constraints);
+
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.ipadx = 128;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        addComponent(new JLabel("Resource"), constraints, 0, 0);
+        addComponent(new JLabel("Amount"), constraints, 1, 0);
+        addComponent(new TextField(), constraints, 0, 1);
+        addComponent(amountField, constraints, 1, 1);
+        addComponent(button, constraints, 2, 1);
+        addComponent(output, constraints, 0, 2, 3);
 
         setVisible(true);
+    }
+
+    private void addComponent(Component component, GridBagConstraints constraints, int x, int y) {
+        constraints.gridx = x;
+        constraints.gridy = y;
+        add(component, constraints);
+    }
+
+    private void addComponent(Component component, GridBagConstraints constraints, int x, int y, int gridwidth) {
+        constraints.gridx = x;
+        constraints.gridy = y;
+        constraints.gridwidth = gridwidth;
+        add(component, constraints);
     }
 
     private void calculate() {
