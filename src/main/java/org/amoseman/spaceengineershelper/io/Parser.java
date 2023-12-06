@@ -1,6 +1,8 @@
 package org.amoseman.spaceengineershelper.io;
 import org.amoseman.spaceengineershelper.resource.Cost;
 import org.amoseman.spaceengineershelper.resource.Resource;
+import org.amoseman.spaceengineershelper.state.State;
+import org.amoseman.spaceengineershelper.state.StateFactory;
 
 import java.util.ArrayList;
 import java.util.List;

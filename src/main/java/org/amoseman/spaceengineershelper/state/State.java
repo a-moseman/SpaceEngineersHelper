@@ -1,4 +1,4 @@
-package org.amoseman.spaceengineershelper.io;
+package org.amoseman.spaceengineershelper.state;
 
 import org.amoseman.spaceengineershelper.resource.Cost;
 

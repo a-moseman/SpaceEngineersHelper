@@ -1,25 +1,17 @@
 package org.amoseman.spaceengineershelper;
 
-import org.amoseman.spaceengineershelper.io.Parser;
-import org.amoseman.spaceengineershelper.io.Reader;
-import org.amoseman.spaceengineershelper.io.State;
+import org.amoseman.spaceengineershelper.io.StateLoader;
+import org.amoseman.spaceengineershelper.state.State;
 import org.amoseman.spaceengineershelper.resource.Cost;
 import org.amoseman.spaceengineershelper.resource.Resource;
 
-import java.io.IOException;
 import java.util.List;
 
 public class Model {
     private State state;
 
     public Model(String path) {
-        List<String> lines = null;
-        try {
-            lines = Reader.read(path);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        state = Parser.parse(lines);
+        state = StateLoader.load(path);
     }
 
     public AggregatedCost getAggregatedCost(Resource resource) {
