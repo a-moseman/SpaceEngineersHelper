@@ -4,6 +4,7 @@ import org.amoseman.spaceengineershelper.resource.Cost;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 public class State {
     private final List<String> resourceNames;
@@ -15,6 +16,10 @@ public class State {
         for (Cost cost : resourceCosts) {
             this.resourceCosts.put(cost.getOut().getName(), cost);
         }
+    }
+
+    public Set<String> getResourceCostsKeys() {
+        return resourceCosts.keySet();
     }
 
     public boolean hasCost(String name) {

@@ -6,12 +6,15 @@ import org.amoseman.spaceengineershelper.resource.Resource;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Collections;
+import java.util.List;
 
 public class View extends JFrame {
     private final Model model;
-    private final TextField nameField;
+    //private final TextField nameField;
     private final TextField amountField;
     private final TextArea output;
+    private final JComboBox<String> resourceDropdownBox;
     private int lastOutputLength = 0;
 
     public View(Model model) {
@@ -20,19 +23,24 @@ public class View extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new GridBagLayout());
 
-        nameField = new TextField();
+        //nameField = new TextField();
         amountField = new TextField();
         JButton button = new JButton("Calculate");
         button.addActionListener(e -> calculate());
         output = new TextArea();
         output.setEditable(false);
+        List<String> keys = model.getResourcesWithCost();
+        Collections.sort(keys);
+        String[] choices = keys.toArray(new String[0]);
+        resourceDropdownBox = new JComboBox<>(choices);
 
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.ipadx = 128;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         addComponent(new JLabel("Resource"), constraints, 0, 0);
         addComponent(new JLabel("Amount"), constraints, 1, 0);
-        addComponent(nameField, constraints, 0, 1);
+        //addComponent(nameField, constraints, 0, 1);
+        addComponent(resourceDropdownBox, constraints, 0, 1);
         addComponent(amountField, constraints, 1, 1);
         addComponent(button, constraints, 2, 1);
         addComponent(output, constraints, 0, 2, 3);
@@ -54,7 +62,8 @@ public class View extends JFrame {
     }
 
     private void calculate() {
-        String name = nameField.getText();
+        //String name = nameField.getText();
+        String name = (String) resourceDropdownBox.getSelectedItem();
         if (!model.isResource(name)) {
             error("invalid resource name");
             return;
@@ -71,7 +80,7 @@ public class View extends JFrame {
             error("amount must be greater than 0");
             return;
         }
-        Resource resource = new Resource(nameField.getText(), amount);
+        Resource resource = new Resource(name, amount);
         AggregatedCost aggregatedCost = model.getAggregatedCost(resource);
         write(aggregatedCost.toString());
     }
@@ -80,7 +89,7 @@ public class View extends JFrame {
         output.replaceRange("", 0, lastOutputLength);
         output.insert(text, 0);
         lastOutputLength = text.length();
-        nameField.setText("");
+        //nameField.setText("");
         amountField.setText("");
     }
 

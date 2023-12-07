@@ -5,13 +5,18 @@ import org.amoseman.spaceengineershelper.state.State;
 import org.amoseman.spaceengineershelper.resource.Cost;
 import org.amoseman.spaceengineershelper.resource.Resource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Model {
-    private State state;
+    private final State state;
 
     public Model(String path) {
         state = StateLoader.load(path);
+    }
+
+    public List<String> getResourcesWithCost() {
+        return new ArrayList<>(state.getResourceCostsKeys());
     }
 
     public AggregatedCost getAggregatedCost(Resource resource) {
